@@ -1,0 +1,9 @@
+[package]
+name = "islink"
+version = "0.1.0"
+authors = ["Miles Steele <miles@milessteele.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.32.0"
+failure = "0.1.5"
