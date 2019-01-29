@@ -26,6 +26,7 @@ fn main2() -> Result<(), Error> {
 
     let full_path = Path::new(matches.value_of("path").ok_or(err_msg("missing path arg"))?);
     let mut path = PathBuf::new();
+    let mut islink = false;
     for part in full_path.iter() {
         path.push(part);
         // println!("\n{:?}", path);
@@ -33,6 +34,7 @@ fn main2() -> Result<(), Error> {
             Ok(meta) => {
                 if meta.file_type().is_symlink() {
                     let target = fs::read_link(&path)?;
+                    islink = true;
                     println!("{} -> {}", path.display(), target.display());
                 }
             }
@@ -44,6 +46,9 @@ fn main2() -> Result<(), Error> {
                 Err(err)?;
             }
         }
+    }
+    if !islink {
+        println!("{} is not a link", path.display());
     }
     Ok(())
 }
